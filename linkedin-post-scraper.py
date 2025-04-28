@@ -184,8 +184,19 @@ for container in containers:
     # Shares
     shares_element = container.find_all(lambda tag: tag.name == 'button' and 'aria-label' in tag.attrs and 'repost' in tag['aria-label'].lower())
     shares_idx = 1 if len(shares_element) > 1 else 0
-    post_shares = shares_element[shares_idx].text.strip() if shares_element and shares_element[shares_idx].text.strip() != '' else 0
-        
+    post_shares = shares_element[shares_idx].text.strip() if shares_element and shares_element[shares_idx].text.strip() != '' else 0 
+    # Append the collected data to the posts_data list
+    posts_data.append({
+        "Page": company_name,
+        "Date": post_date,
+        "Post Text": post_text,
+        "Media Type": media_type,
+        "Likes": post_reactions,
+        "Comments": post_comments,
+        "Shares":post_shares,
+        "Likes Numeric": convert_abbreviated_to_number(post_reactions),
+        "Media Link": media_link
+    })
 
 # Convert the data into a DataFrame and perform data cleaning and sorting
 try:
